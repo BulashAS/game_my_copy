@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:game_my_copy/game_core/main_loop.dart';
+import 'package:game_my_copy/game_core/game.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,9 +10,7 @@ void main() {
       .whenComplete(() {
     runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Center(
-        child: Text("Game"),
-      ),
+      home: Game()
     ));
   });
 }
