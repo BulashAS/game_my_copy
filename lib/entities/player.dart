@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:game_my_copy/entities/entity.dart';
 
 class Player extends Entity {
