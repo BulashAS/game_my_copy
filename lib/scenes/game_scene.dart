@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter/src/widgets/framework.dart';
 import 'package:game_my_copy/entities/player.dart';
 import 'package:game_my_copy/scenes/app_scene.dart';
 import 'package:game_my_copy/utilits/global_vars.dart';
 
 class GameScene extends AppScene {
-  Player _player = Player();
+  final Player _player = Player();
+  double _startGlobalPosition = 0;
 
   @override
   Widget buildScene() {
@@ -20,8 +20,35 @@ class GameScene extends AppScene {
               height: GlobalVars.screenHeigth,
               decoration:
                   BoxDecoration(border: Border.all(color: Colors.green)),
-            )
-        )
+              child: GestureDetector(
+                onPanStart: _onPanStart,
+                onPanUpdate: _onPanUpdate,
+              ),
+            )),
+        Positioned(
+            top: 0,
+            left: GlobalVars.screenWidth / 2,
+            child: Container(
+              width: GlobalVars.screenWidth / 2,
+              height: GlobalVars.screenHeigth / 2,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.green)),
+              child: GestureDetector(
+                onTap: _onAcceleration,
+              ),
+            )),
+        Positioned(
+            top: GlobalVars.screenHeigth / 2,
+            left: GlobalVars.screenWidth / 2,
+            child: Container(
+              width: GlobalVars.screenWidth / 2,
+              height: GlobalVars.screenHeigth / 2,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.green)),
+              child: GestureDetector(
+                onTap: _onShoot,
+              ),
+            ))
       ],
     );
   }
@@ -29,5 +56,28 @@ class GameScene extends AppScene {
   @override
   void update() {
     _player.update();
+  }
+
+  GameScene();
+
+  void _onPanStart(DragStartDetails details) {
+    _startGlobalPosition = details.globalPosition.dx;
+  }
+
+  void _onPanUpdate(DragUpdateDetails details) {
+    double updateGlobalPosition = details.globalPosition.dx;
+    if (updateGlobalPosition > _startGlobalPosition + 30) {
+      _player.isMoveRight = true;
+    }
+    if (updateGlobalPosition < _startGlobalPosition - 30) {
+      _player.isMoveLeft = true;
+    }
+  }
+
+  void _onAcceleration() {
+    _player.isMoving = !_player.isMoving;
+  }
+
+  void _onShoot() {
   }
 }
